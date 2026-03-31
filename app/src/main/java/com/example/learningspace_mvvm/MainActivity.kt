@@ -19,7 +19,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearningSpace_MVVMTheme {
-                LearningSpace_UI()
+               // LearningSpace_UI()
+                MemberGallery_UI()
             }
         }
     }
