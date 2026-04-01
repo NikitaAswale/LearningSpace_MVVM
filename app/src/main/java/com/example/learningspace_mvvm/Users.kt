@@ -6,7 +6,7 @@ data class Users(
     val username : String,
     val email : String,
     val address : Address,
-    val phone : Int,
+    val phone : String,
     val website : String,
     val company : Company
 )
@@ -21,7 +21,7 @@ data class Address(
 
 data class Geo(
     val lat : String,
-    val Ing : String
+    val lng : String
 )
 
 data class Company(

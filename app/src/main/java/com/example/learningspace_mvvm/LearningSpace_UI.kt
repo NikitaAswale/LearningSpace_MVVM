@@ -36,14 +36,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun LearningSpace_UI(){
+fun LearningSpace_UI(navController: NavController){
     Column(modifier = Modifier
         .fillMaxSize())
     {
         Top()
-        Middle()
+        Middle(navController)
     }
 }
 
@@ -71,7 +72,7 @@ fun Top(){
 }
 
 @Composable
-fun Middle() {
+fun Middle(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -215,7 +216,7 @@ fun Middle() {
         {
 
         Button(
-            onClick = {},
+            onClick = {navController.navigate("Screen2")},
             Modifier, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB7410E))
         )
         {
