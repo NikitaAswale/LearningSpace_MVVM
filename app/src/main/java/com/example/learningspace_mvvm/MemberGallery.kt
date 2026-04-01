@@ -3,6 +3,7 @@ package com.example.learningspace_mvvm
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,10 +18,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -37,17 +42,23 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 
 @Composable
-fun MemberGallery_UI(viewModel: UsersViewModel = viewModel()){
+fun MemberGallery_UI(viewModel: UsersViewModel = viewModel(), navController: NavController){
     val user by viewModel.users.collectAsState()
-    Column(modifier = Modifier.fillMaxSize()) {
-        TopPart()
-        MiddlePart(user)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column() {
+            TopPart()
+            MiddlePart(user)
+            BottomPart()
+        }
+        BottomPart()
     }
 }
 @Composable
@@ -78,7 +89,9 @@ fun TopPart(){
             verticalAlignment = Alignment.CenterVertically) {
             Image(painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = "",
-                Modifier.background(Color.Black, CircleShape).size(30.dp),
+                Modifier
+                    .background(Color.Black, CircleShape)
+                    .size(30.dp),
                 colorFilter = ColorFilter.tint(Color.White)
             )
         }
@@ -96,7 +109,7 @@ fun MiddlePart(user : List<Users>) {
     )
     {
 
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.height(10.dp))
 
         Text(
             "DIRECTORY",
@@ -169,49 +182,129 @@ fun MiddlePart(user : List<Users>) {
                 UserList(users)
             }
         }
+
+
+        Text("LOAD MORE MEMBERS",
+            textAlign = TextAlign.Center,
+            fontSize = 18.sp,
+            color = Color(0xFFB7410E),
+            modifier = Modifier,
+        )
     }
 }
 
 @Composable
 fun UserList(users: Users){
-    Row(modifier = Modifier.fillMaxWidth()
-        .padding(20.dp),
-        verticalAlignment = Alignment.CenterVertically)
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly
+    )
     {
-        Icon(Icons.Default.AccountCircle, contentDescription = "",
-            modifier = Modifier.size(80.dp)
-                .background(Color.Black, RoundedCornerShape(16.dp)),
-            tint = Color.White)
+        Icon(
+            Icons.Default.AccountCircle, contentDescription = "",
+            modifier = Modifier
+                .size(40.dp)
+                .background(Color.Black, RoundedCornerShape(6.dp)),
+            tint = Color.White
+        )
 
         Spacer(Modifier.width(16.dp))
 
-        Column(modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Center
         ) {
-            Text("${users.name}",
-                fontSize = 22.sp,
+            Text(
+                "${users.name}",
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF57C00)
             )
 
-            Spacer(Modifier.height(8.dp))
-
-            Text("${users.email}",
+            Text(
+                "${users.email}",
                 fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = Color(0xFF6F4E37))
-        }
-        Row(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End)
-        {
-            Icon(Icons.Default.MoreVert, contentDescription = "",
-                modifier = Modifier.size(40.dp),
-                tint = Color.Black
+                fontSize = 16.sp,
+                color = Color(0xFF6F4E37)
             )
+        }
+
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Icon(Icons.Default.MoreVert, contentDescription = "")
         }
     }
 }
 
 @Composable
 fun BottomPart(){
+    Row(modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.Bottom) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .background(Color.White)
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        )
+        {
+            Column(Modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center) {
+                Icon(
+                    Icons.Default.Home, contentDescription = "",
+                    modifier = Modifier.size(25.dp),
+                    tint = Color(0xFF6F4E37)
+                )
+                Spacer(Modifier.height(2.dp))
 
+                Text("Home",
+                    fontSize = 14.sp,
+                    color = Color(0xFF6F4E37))
+            }
+
+            Column(Modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center) {
+            Icon(Icons.Default.Email, contentDescription = "",
+                modifier = Modifier.size(25.dp),
+                tint = Color(0xFF6F4E37))
+
+                Spacer(Modifier.height(2.dp))
+
+                Text("Home",
+                    fontSize = 14.sp,
+                    color = Color(0xFF6F4E37))
+            }
+
+            Column(Modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center) {
+            Icon(Icons.Default.Search, contentDescription = "",
+                modifier = Modifier.size(25.dp),
+                tint = Color(0xFF6F4E37))
+
+                Spacer(Modifier.height(2.dp))
+
+                Text("Home",
+                    fontSize = 14.sp,
+                    color = Color(0xFF6F4E37))
+            }
+
+            Column(Modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center) {
+            Icon(Icons.Default.Settings, contentDescription = "",
+                modifier = Modifier.size(25.dp),
+                tint = Color(0xFF6F4E37))
+
+                Spacer(Modifier.height(2.dp))
+
+                Text("Home",
+                    fontSize = 14.sp,
+                    color = Color(0xFF6F4E37))
+            }
+        }
+    }
 }
