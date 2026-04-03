@@ -485,10 +485,12 @@ fun Bottom_Part(){
 
             Column(horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center) {
-                Icon(Icons.Default.CheckCircle, contentDescription = "",
+                Icon(
+                    Icons.Default.CheckCircle, contentDescription = "",
                     Modifier.size(30.dp)
                 )
-                Text("Certificates",
+                Text(
+                    "Certificates",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
