@@ -8,5 +8,5 @@ interface APIService {
     suspend fun getUsers(): List<Users>
 
     @GET("users/1")
-    suspend fun getUsers1(): List<Users1>
+    suspend fun getUsers1(): Users1
 }

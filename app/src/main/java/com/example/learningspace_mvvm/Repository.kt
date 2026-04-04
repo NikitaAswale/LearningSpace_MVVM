@@ -12,11 +12,11 @@ class Repository() {
         }
     }
 
-    suspend fun getUsers1(): List<Users1>{
+    suspend fun getUsers1(): Users1?{
         return try {
             apiService.getUsers1()
         } catch (e: Exception) {
-            emptyList()
+            null
         }
     }
 

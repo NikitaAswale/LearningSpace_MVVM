@@ -6,7 +6,7 @@ data class Users1(
     val username : String,
     val email : String,
     val address: UserAddress,
-    val phone : Int,
+    val phone : String,
     val website : String,
     val company: UserCompany
 )
@@ -20,8 +20,8 @@ data class UserAddress(
 )
 
 data class UserGeo(
-    val lat : Int,
-    val lng : Int,
+    val lat : String,
+    val lng : String,
 )
 
 data class UserCompany(
@@ -29,5 +29,4 @@ data class UserCompany(
     val catchPhrase : String,
     val bs : String
 )
-
 
