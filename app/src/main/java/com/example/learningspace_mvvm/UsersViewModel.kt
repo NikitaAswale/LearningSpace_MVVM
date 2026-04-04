@@ -12,9 +12,9 @@ class UsersViewModel : ViewModel() {
     private val repository1 = Repository()
 
     private val _users = MutableStateFlow<List<Users>>(emptyList())
-    private val _users1 = MutableStateFlow<List<Users1>>(emptyList())
+    private val _users1 = MutableStateFlow<Users1?>(null)
     val users: StateFlow<List<Users>> = _users
-    val users1: StateFlow<List<Users1>> = _users1
+    val users1: StateFlow<Users1?> = _users1
 
     init {
         fetchUsers()

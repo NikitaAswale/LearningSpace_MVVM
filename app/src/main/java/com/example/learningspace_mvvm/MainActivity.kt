@@ -22,26 +22,29 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearningSpace_MVVMTheme {
-               //NavComponent()
-                ProfileDetailsUI()
+               NavComponent()
             }
         }
     }
 }
 
-//@Composable
-//fun NavComponent() {
-//
-//    val navController = rememberNavController() // to define the state of the navigation
-//
-//    NavHost(navController = navController, startDestination = "Screen1")
-//    {
-//        composable("Screen1") {
-//            LearningSpace_UI(navController = navController)
-//        }
-//
-//        composable("Screen2") {
-//            MemberGallery_UI(navController = navController)
-//        }
-//    }
-//}
+@Composable
+fun NavComponent() {
+
+    val navController = rememberNavController() // to define the state of the navigation
+
+    NavHost(navController = navController, startDestination = "Screen1")
+    {
+        composable("Screen1") {
+            LearningSpace_UI(navController = navController)
+        }
+
+        composable("Screen2") {
+            MemberGallery_UI(navController = navController)
+        }
+
+        composable("Screen3") {
+            ProfileDetailsUI(navController = navController)
+        }
+    }
+}

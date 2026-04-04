@@ -2,6 +2,7 @@ package com.example.learningspace_mvvm
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -57,6 +58,7 @@ fun MemberGallery_UI(viewModel: UsersViewModel = viewModel(), navController: Nav
             TopPart()
             MiddlePart(
                 user = user,
+                navController = navController,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -102,7 +104,7 @@ fun TopPart(){
 }
 
 @Composable
-fun MiddlePart(user : List<Users>, modifier: Modifier = Modifier) {
+fun MiddlePart(user : List<Users>, navController: NavController, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -183,25 +185,29 @@ fun MiddlePart(user : List<Users>, modifier: Modifier = Modifier) {
             modifier = Modifier.weight(1f)
         ) {
             items(user) {users ->
-                UserList(users)
+                UserList(
+                    users = users,
+                    onClick = { navController.navigate("Screen3") }
+                )
             }
         }
 
-
-        Text("LOAD MORE MEMBERS",
+        Text(
+            "LOAD MORE MEMBERS",
             textAlign = TextAlign.Center,
             fontSize = 18.sp,
             color = Color(0xFFB7410E),
-            modifier = Modifier,
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
 
 @Composable
-fun UserList(users: Users){
+fun UserList(users: Users, onClick: () -> Unit){
     Row(modifier = Modifier
         .fillMaxWidth()
-        .padding(12.dp),
+        .padding(12.dp)
+        .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     )

@@ -1,10 +1,9 @@
 package com.example.learningspace_mvvm
-
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,27 +34,31 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 
 @Composable
-fun ProfileDetailsUI(viewModel: UsersViewModel = viewModel()){
+fun ProfileDetailsUI(
+    navController: NavController,
+    viewModel: UsersViewModel = viewModel()
+){
     val user1 by viewModel.users1.collectAsState()
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            Top_Part()
+            Top_Part(navController = navController)
             Middle_Part(
-                users1 = user1,
+                user = user1,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -64,16 +67,20 @@ fun ProfileDetailsUI(viewModel: UsersViewModel = viewModel()){
 }
 
 @Composable
-fun Top_Part(){
+fun Top_Part(navController: NavController){
     Row(modifier = Modifier.fillMaxWidth()
         .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically) {
 
-        Icon(Icons.Default.ArrowBack, contentDescription = "",
-            modifier = Modifier.size(25.dp),
-            tint = Color(0xFFB7410E)
-        )
+        IconButton(onClick = { navController.navigateUp() }) {
+            Icon(
+                Icons.Default.ArrowBack,
+                contentDescription = "",
+                modifier = Modifier.size(25.dp),
+                tint = Color(0xFFB7410E)
+            )
+        }
 
         Spacer(Modifier.width(20.dp))
 
@@ -95,12 +102,13 @@ fun Top_Part(){
 
 @Composable
 
-fun Middle_Part(users1: List<Users1>, modifier: Modifier = Modifier) {
+fun Middle_Part(user: Users1?, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
             .background(Color.LightGray)
-            .padding(18.dp)
+            .padding(18.dp),
+        contentPadding = PaddingValues(bottom = 96.dp)
     ) {
         item {
             Spacer(Modifier.height(30.dp))
@@ -115,8 +123,10 @@ fun Middle_Part(users1: List<Users1>, modifier: Modifier = Modifier) {
             Spacer(Modifier.height(10.dp))
         }
 
-        items(users1) { user ->
-            ProfileList(user)
+        item {
+            user?.let {
+                ProfileList(it)
+            }
         }
     }
 }
@@ -149,7 +159,7 @@ fun ProfileList(user : Users1) {
             ) {
 
                 Button(
-                    onClick = {}, modifier = Modifier.fillMaxWidth(),
+                    onClick = {}, modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB7410E))
                 ) {
                     Icon(
@@ -170,17 +180,13 @@ fun ProfileList(user : Users1) {
                     )
                 }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
+                Spacer(Modifier.width(12.dp))
 
-                    Icon(
-                        Icons.Default.Settings, contentDescription = "",
-                        modifier = Modifier.size(30.dp),
-                        tint = Color(0xFFB7410E)
-                    )
-                }
+                Icon(
+                    Icons.Default.Settings, contentDescription = "",
+                    modifier = Modifier.size(30.dp),
+                    tint = Color(0xFFB7410E)
+                )
             }
 
             Spacer(Modifier.height(30.dp))
@@ -248,7 +254,7 @@ fun ProfileList(user : Users1) {
                     Spacer(Modifier.height(12.dp))
 
                     Text(
-                        "${user.address}",
+                        "${user.address.street}",
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
@@ -356,7 +362,7 @@ fun ProfileList(user : Users1) {
                     Spacer(Modifier.height(12.dp))
 
                     Text(
-                        "${user.address}",
+                        "${user.address.street}",
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
@@ -391,7 +397,7 @@ fun ProfileList(user : Users1) {
                 Spacer(Modifier.width(10.dp))
 
                 Column(
-                    Modifier.fillMaxWidth(),
+                    Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
@@ -436,7 +442,7 @@ fun ProfileList(user : Users1) {
                 Spacer(Modifier.width(10.dp))
 
                 Column(
-                    Modifier.fillMaxWidth(),
+                    Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center
 
                 ) {
