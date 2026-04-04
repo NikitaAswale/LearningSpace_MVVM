@@ -52,13 +52,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun ProfileDetailsUI(viewModel: UsersViewModel = viewModel()){
     val user1 by viewModel.users1.collectAsState()
     Box(modifier = Modifier.fillMaxSize()) {
-        Column() {
+        Column(modifier = Modifier.fillMaxSize()) {
             Top_Part()
-            LazyColumn() {
-                item {
-                    Middle_Part(user1)
-                }
-            }
+            Middle_Part(
+                users1 = user1,
+                modifier = Modifier.weight(1f)
+            )
         }
         Bottom_Part()
     }
@@ -96,31 +95,28 @@ fun Top_Part(){
 
 @Composable
 
-fun Middle_Part(users1: List<Users1>) {
-
-    Column(
-        modifier = Modifier
+fun Middle_Part(users1: List<Users1>, modifier: Modifier = Modifier) {
+    LazyColumn(
+        modifier = modifier
             .fillMaxWidth()
             .background(Color.LightGray)
             .padding(18.dp)
-    )
-    {
+    ) {
+        item {
+            Spacer(Modifier.height(30.dp))
 
-        Spacer(Modifier.height(30.dp))
+            Text(
+                "EDITORIAL MEMBER",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF00BFFF)
+            )
 
-        Text(
-            "EDITORIAL MEMBER",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF00BFFF)
-        )
+            Spacer(Modifier.height(10.dp))
+        }
 
-        Spacer(Modifier.height(10.dp))
-
-        LazyColumn() {
-            items(users1) { user ->
-                ProfileList(user)
-            }
+        items(users1) { user ->
+            ProfileList(user)
         }
     }
 }

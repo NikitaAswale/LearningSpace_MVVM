@@ -53,10 +53,12 @@ import androidx.navigation.NavController
 fun MemberGallery_UI(viewModel: UsersViewModel = viewModel(), navController: NavController){
     val user by viewModel.users.collectAsState()
     Box(modifier = Modifier.fillMaxSize()) {
-        Column() {
+        Column(modifier = Modifier.fillMaxSize()) {
             TopPart()
-            MiddlePart(user)
-            BottomPart()
+            MiddlePart(
+                user = user,
+                modifier = Modifier.weight(1f)
+            )
         }
         BottomPart()
     }
@@ -100,10 +102,10 @@ fun TopPart(){
 }
 
 @Composable
-fun MiddlePart(user : List<Users>) {
+fun MiddlePart(user : List<Users>, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
+            .fillMaxWidth()
             .background(Color.LightGray)
             .padding(18.dp)
     )
@@ -177,7 +179,9 @@ fun MiddlePart(user : List<Users>) {
             }
         }
 
-        LazyColumn() {
+        LazyColumn(
+            modifier = Modifier.weight(1f)
+        ) {
             items(user) {users ->
                 UserList(users)
             }
